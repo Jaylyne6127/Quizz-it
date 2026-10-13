@@ -1,27 +1,29 @@
 /* Palet "Atlas": diepe oceaanblauw-groen, koraal als accent, zonnig geel en mint voor feedback. */
 :root {
-    color-scheme: light;
-    --bg: #fbf3e4; --surface: #fffdf8; --ink: #17313b; --muted: #5f7a84; --line: #eadfc9; --soft: #f4ead6;
-    --head-1: #0e4a5c; --head-2: #1d8a96; --head-ink: #fff;
-    --accent: #ff6b4a; --accent-hover: #f0532f; --accent-ink: #fff; --sun: #ffc83d;
-    --good: #12a36b; --bad: #e5484d;
-    --sea: #8fd0ee; --border: #fffdf8;
-    --land-0: #ffe08a; --land-1: #b7e4c7; --land-2: #ffc4ad; --land-3: #d7c9f5; --land-4: #bfe3a5; --land-5: #f6bfd8;
-    --target: #3fdc97; --wrong: #ff7a7a;
-    --shadow: 0 6px 20px rgba(14, 74, 92, .12);
+color-scheme: light;
+--bg: #fbf3e4; --surface: #fffdf8; --ink: #17313b; --muted: #5f7a84; --line: #eadfc9; --soft: #f4ead6;
+--head-1: #0e4a5c; --head-2: #1d8a96; --head-ink: #fff;
+--accent: #ff6b4a; --accent-hover: #f0532f; --accent-ink: #fff; --sun: #ffc83d;
+--good: #12a36b; --bad: #e5484d;
+--sea: #8fd0ee; --border: #fffdf8;
+--land-0: #ffe08a; --land-1: #b7e4c7; --land-2: #ffc4ad; --land-3: #d7c9f5; --land-4: #bfe3a5; --land-5: #f6bfd8;
+--target: #3fdc97; --wrong: #ff7a7a;
+--shadow: 0 6px 20px rgba(14, 74, 92, .12);
 }
+
 :root[data-theme="dark"] {
-    color-scheme: dark;
-    --bg: #0b1822; --surface: #13293a; --ink: #e8f3f6; --muted: #8fb0bc; --line: #234257; --soft: #1a3447;
-    --head-1: #081f2d; --head-2: #0f4157;
-    --accent: #ff7a59; --accent-hover: #ff8f72; --accent-ink: #1a0d08; --sun: #ffd45c;
-    --good: #35d49a; --bad: #ff6b70;
-    --sea: #0e2c42; --border: #0b1822;
-    --land-0: #8a7430; --land-1: #2f7358; --land-2: #96553f; --land-3: #5e4e94; --land-4: #55793a; --land-5: #8c4568;
-    --target: #1fb97c; --wrong: #c8454b;
-    --shadow: 0 6px 20px rgba(0, 0, 0, .35);
+color-scheme: dark;
+--bg: #0b1822; --surface: #13293a; --ink: #e8f3f6; --muted: #8fb0bc; --line: #234257; --soft: #1a3447;
+--head-1: #081f2d; --head-2: #0f4157;
+--accent: #ff7a59; --accent-hover: #ff8f72; --accent-ink: #1a0d08; --sun: #ffd45c;
+--good: #35d49a; --bad: #ff6b70;
+--sea: #0e2c42; --border: #0b1822;
+--land-0: #8a7430; --land-1: #2f7358; --land-2: #96553f; --land-3: #5e4e94; --land-4: #55793a; --land-5: #8c4568;
+--target: #1fb97c; --wrong: #c8454b;
+--shadow: 0 6px 20px rgba(0, 0, 0, .35);
 }
-* { box-sizing: border-box; }
+
+{ box-sizing: border-box; }
 body { margin: 0; background: var(--bg); color: var(--ink); font: 15px/1.5 'Plus Jakarta Sans', system-ui, sans-serif; transition: background .2s, color .2s; }
 h1, h2, p, dl, dd, fieldset { margin: 0; padding: 0; border: 0; }
 button, select { font: inherit; color: inherit; }
@@ -55,7 +57,7 @@ button, select { font: inherit; color: inherit; }
 .feedback.bad { color: #fff; background: var(--bad); }
 .small-text { font-size: 13px; }
 
-.btn { border: 2px solid var(--line); background: var(--surface); padding: 9px 18px; border-radius: 12px; font-weight: 700; cursor: pointer; transition: background .15s, transform .1s; }
+.btn { border: 2px solid var(--line); background: var(--surface); padding: 99px; padding: 9px 18px; border-radius: 12px; font-weight: 700; cursor: pointer; transition: background .15s, transform .1s; }
 .btn:hover { background: var(--soft); }
 .btn:active { transform: scale(.97); }
 .btn.primary { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); box-shadow: 0 4px 0 color-mix(in srgb, var(--accent) 60%, #000); }
@@ -115,8 +117,117 @@ legend { font-size: 12px; font-weight: 800; text-transform: uppercase; letter-sp
 .result dd { font-size: 24px; font-weight: 800; }
 
 @media (max-width: 900px) {
-    .layout { grid-template-columns: 1fr; padding: 10px; }
-    .topbar { padding: 10px 14px; flex-wrap: wrap; }
-    .stats > div { padding: 3px 10px; min-width: 52px; }
-    .map-wrap svg { max-height: 70vh; }
+.layout { grid-template-columns: 1fr; padding: 10px; }
+.topbar { padding: 10px 14px; flex-wrap: wrap; }
+.stats > div { padding: 3px 10px; min-width: 52px; }
+.map-wrap svg { max-height: 70vh; }
+}
+
+/* ==========================================================================
+DISCO MODUS STYLES & ANIMATIES
+========================================================================== */
+
+/* Flitsende achtergrond */
+body.disco-mode {
+animation: disco-bg-flash 1.2s infinite alternate ease-in-out !important;
+}
+
+@keyframes disco-bg-flash {
+0%   { background-color: #0f0c20; }
+25%  { background-color: #2b0036; }
+50%  { background-color: #002b36; }
+75%  { background-color: #362b00; }
+100% { background-color: #200c1f; }
+}
+
+body.disco-mode .map-wrap {
+background-color: transparent;
+border-color: #ff007f;
+box-shadow: 0 0 25px rgba(255, 0, 127, 0.5);
+}
+
+body.disco-mode #sea {
+fill: #08031a;
+}
+
+/* Neon Glow voor de Titel & Branding */
+body.disco-mode .brand h1 {
+animation: neon-glow 0.8s infinite alternate;
+}
+
+@keyframes neon-glow {
+from {
+text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 20px #ff007f, 0 0 30px #ff007f;
+color: #ffffff;
+}
+to {
+text-shadow: 0 0 10px #fff, 0 0 20px #00f0ff, 0 0 30px #00f0ff, 0 0 40px #00f0ff;
+color: #e0ffff;
+}
+}
+
+/* Disco Kaart Effecten & Neon Landen */
+body.disco-mode #countries path {
+stroke: #ffffff !important;
+stroke-width: 1;
+filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.7));
+transition: fill 0.3s ease, filter 0.3s ease;
+}
+
+body.disco-mode #countries path:hover {
+filter: drop-shadow(0 0 15px #ffffff);
+transform: scale(1.01);
+}
+
+/* Disco Bal Element */
+.disco-ball {
+position: fixed;
+top: 15px;
+left: 50%;
+transform: translateX(-50%);
+font-size: 3rem;
+z-index: 1000;
+animation: spin-disco 2s infinite linear, bounce-disco 1s infinite alternate ease-in-out;
+pointer-events: none;
+filter: drop-shadow(0 0 12px rgba(255, 255, 255, 0.8));
+}
+
+.disco-ball.hidden {
+display: none;
+}
+
+@keyframes spin-disco {
+0%   { transform: translateX(-50%) rotate(0deg); }
+100% { transform: translateX(-50%) rotate(360deg); }
+}
+
+@keyframes bounce-disco {
+0%   { top: 12px; }
+100% { top: 26px; }
+}
+
+/* Glowing overlay / card in disco modus */
+body.disco-mode .card {
+background: rgba(10, 5, 25, 0.9);
+border-color: #00f0ff;
+color: #ffffff;
+box-shadow: 0 0 20px rgba(0, 240, 255, 0.4);
+}
+
+body.disco-mode .card h2 {
+color: #00f0ff;
+}
+
+/* Disco knop accent */
+#btn-disco.active {
+background: linear-gradient(45deg, #ff007f, #00f0ff);
+border-color: #ffffff;
+color: #ffffff;
+box-shadow: 0 0 15px #ff007f, 0 0 25px #00f0ff;
+animation: pulse-disco-btn 1s infinite alternate;
+}
+
+@keyframes pulse-disco-btn {
+from { transform: scale(1); }
+to   { transform: scale(1.05); }
 }
