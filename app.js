@@ -6,7 +6,7 @@ const CATEGORIES = { landen: 'Landen', hoofdsteden: 'Hoofdsteden', buurlanden: '
 const HINT_COST = 75;
 // Afstandsdrempels in km: [uitstekend, dichtbij, in de buurt]
 const DISTANCE_STEPS = { europe: [70, 180, 350], world: [300, 800, 1600] };
-
+// hi jaylyne 
 const store = {
     get(key, fallback) { try { return JSON.parse(localStorage.getItem(key)) ?? fallback; } catch { return fallback; } },
     set(key, value) { try { localStorage.setItem(key, JSON.stringify(value)); } catch { /* opslag niet beschikbaar */ } }
