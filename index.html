@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light dark">
+    <title>Quiz IT – Geografiequiz</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header class="topbar">
+        <div class="brand">
+            <h1>Quiz IT</h1>
+            <span id="region-label" class="muted">Europa</span>
+        </div>
+        <dl id="stats" class="stats" hidden>
+            <div><dt>Score</dt><dd id="stat-score">0</dd></div>
+            <div><dt>Reeks</dt><dd id="stat-streak">0</dd></div>
+            <div><dt>Ronde</dt><dd id="stat-round">0/0</dd></div>
+        </dl>
+        <button id="btn-settings" class="icon-btn" aria-label="Instellingen" title="Instellingen">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 7h10M18 7h2M4 17h2M10 17h10"/><circle cx="16" cy="7" r="2"/><circle cx="8" cy="17" r="2"/></svg>
+        </button>
+    </header>
+
+    <main class="layout">
+        <aside class="panel">
+            <section id="idle" class="card">
+                <h2>Geografiequiz</h2>
+                <p class="muted">Kies een kaart, een categorie en het aantal rondes. Klik daarna op de kaart om te antwoorden.</p>
+                <button id="btn-start" class="btn primary block">Start ronde</button>
+            </section>
+
+            <section id="quiz" class="card" hidden>
+                <div class="row">
+                    <span id="q-meta" class="tag"></span>
+                    <button id="btn-hint" class="btn small">Hint (−75)</button>
+                </div>
+                <h2 id="q-text" class="question"></h2>
+                <p id="q-sub" class="muted"></p>
+                <p id="feedback" class="feedback" aria-live="polite"></p>
+                <div class="row actions">
+                    <button id="btn-stop" class="btn ghost">Stoppen</button>
+                    <button id="btn-next" class="btn primary" hidden>Volgende</button>
+                </div>
+            </section>
+        </aside>
+
+        <section class="map-wrap">
+            <div class="zoom">
+                <button id="zoom-in" class="icon-btn" aria-label="Inzoomen">+</button>
+                <button id="zoom-out" class="icon-btn" aria-label="Uitzoomen">−</button>
+                <button id="zoom-reset" class="icon-btn" aria-label="Zoom herstellen">⟲</button>
+            </div>
+            <svg id="map" viewBox="0 0 1000 750" xmlns="http://www.w3.org/2000/svg">
+                <rect id="sea" width="1000" height="750"/>
+                <g id="viewport">
+                    <g id="countries"></g>
+                    <circle id="hint-circle" r="90" hidden/>
+                    <line id="link" hidden/>
+                    <g id="pin-target" class="pin target" hidden><path d="M0 0C-6-9-9-13-9-18a9 9 0 1 1 18 0c0 5-3 9-9 18z"/><circle cy="-18" r="3.5"/></g>
+                    <g id="pin-player" class="pin player" hidden><path d="M0 0C-6-9-9-13-9-18a9 9 0 1 1 18 0c0 5-3 9-9 18z"/><circle cy="-18" r="3.5"/></g>
+                </g>
+            </svg>
+        </section>
+    </main>
+
+    <dialog id="dlg-setup">
+        <form method="dialog" id="setup-form">
+            <h2>Nieuwe ronde</h2>
+            <fieldset><legend>Kaart</legend>
+                <div class="seg">
+                    <label><input type="radio" name="region" value="europe">Europa</label>
+                    <label><input type="radio" name="region" value="world">Wereld</label>
+                </div>
+            </fieldset>
+            <fieldset><legend>Wat wil je raden?</legend>
+                <div class="seg">
+                    <label><input type="radio" name="category" value="landen">Landen</label>
+                    <label><input type="radio" name="category" value="hoofdsteden">Hoofdsteden</label>
+                    <label><input type="radio" name="category" value="buurlanden">Buurlanden</label>
+                    <label><input type="radio" name="category" value="locaties">Locaties</label>
+                </div>
+            </fieldset>
+            <fieldset><legend>Aantal rondes</legend>
+                <div class="seg" id="rounds-seg">
+                    <label><input type="radio" name="rounds" value="5">5</label>
+                    <label><input type="radio" name="rounds" value="10">10</label>
+                    <label><input type="radio" name="rounds" value="20">20</label>
+                    <label><input type="radio" name="rounds" value="all">Alles</label>
+                </div>
+            </fieldset>
+            <div class="row actions">
+                <button type="button" class="btn ghost" data-close>Annuleren</button>
+                <button id="btn-go" class="btn primary" value="go">Start</button>
+            </div>
+        </form>
+    </dialog>
+
+    <dialog id="dlg-settings">
+        <form method="dialog">
+            <h2>Instellingen</h2>
+            <label class="switch"><span>Thema</span>
+                <select id="set-theme">
+                    <option value="system">Automatisch</option>
+                    <option value="light">Licht</option>
+                    <option value="dark">Donker</option>
+                </select>
+            </label>
+            <label class="switch"><span>Geluid</span><input type="checkbox" id="set-sound"></label>
+            <label class="switch"><span>Hints toestaan</span><input type="checkbox" id="set-hints"></label>
+            <label class="switch"><span>Afstandstolerantie</span>
+                <select id="set-difficulty">
+                    <option value="1.5">Ruim</option>
+                    <option value="1">Normaal</option>
+                    <option value="0.6">Streng</option>
+                </select>
+            </label>
+            <p class="muted small-text">De tolerantie geldt voor hoofdsteden en locaties.</p>
+            <div class="row actions">
+                <button type="button" id="btn-reset-best" class="btn ghost">Records wissen</button>
+                <button class="btn primary">Sluiten</button>
+            </div>
+        </form>
+    </dialog>
+
+    <dialog id="dlg-result">
+        <form method="dialog">
+            <h2>Ronde voltooid</h2>
+            <p id="result-sub" class="muted"></p>
+            <dl class="result">
+                <div><dt>Score</dt><dd id="res-score">0</dd></div>
+                <div><dt>Goed</dt><dd id="res-correct">0</dd></div>
+                <div><dt>Langste reeks</dt><dd id="res-streak">0</dd></div>
+                <div><dt>Beoordeling</dt><dd id="res-grade">–</dd></div>
+            </dl>
+            <p id="res-best" class="muted"></p>
+            <div class="row actions">
+                <button type="button" class="btn" id="btn-again">Opnieuw</button>
+                <button type="button" class="btn primary" id="btn-new">Nieuwe ronde</button>
+            </div>
+        </form>
+    </dialog>
+
+    <script src="map-data.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
