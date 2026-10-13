@@ -11,6 +11,9 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <!-- Discobal Overlay voor Disco Modus -->
+    <div id="disco-ball" class="disco-ball hidden" aria-hidden="true">🪩</div>
+
     <header class="topbar">
         <div class="brand">
             <h1>Quiz IT</h1>
@@ -21,9 +24,15 @@
             <div><dt>Reeks</dt><dd id="stat-streak">0</dd></div>
             <div><dt>Ronde</dt><dd id="stat-round">0/0</dd></div>
         </dl>
-        <button id="btn-settings" class="icon-btn" aria-label="Instellingen" title="Instellingen">
-            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 7h10M18 7h2M4 17h2M10 17h10"/><circle cx="16" cy="7" r="2"/><circle cx="8" cy="17" r="2"/></svg>
-        </button>
+        <div style="display: flex; gap: 8px; align-items: center;">
+            <!-- Disco Modus Knop in de Bovenbalk -->
+            <button id="btn-disco" class="icon-btn" aria-label="Disco Modus AAN/UIT" title="Disco Modus" onclick="if(typeof toggleDiscoMode === 'function') toggleDiscoMode();">
+                🪩
+            </button>
+            <button id="btn-settings" class="icon-btn" aria-label="Instellingen" title="Instellingen">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 7h10M18 7h2M4 17h2M10 17h10"/><circle cx="16" cy="7" r="2"/><circle cx="8" cy="17" r="2"/></svg>
+            </button>
+        </div>
     </header>
 
     <main class="layout">
@@ -109,6 +118,10 @@
                     <option value="light">Licht</option>
                     <option value="dark">Donker</option>
                 </select>
+            </label>
+            <!-- Schakelaar voor Disco Modus in het Instellingenmenu -->
+            <label class="switch"><span>🪩 Disco Modus</span>
+                <input type="checkbox" id="set-disco" onchange="if(typeof toggleDiscoMode === 'function') toggleDiscoMode();">
             </label>
             <label class="switch"><span>Geluid</span><input type="checkbox" id="set-sound"></label>
             <label class="switch"><span>Hints toestaan</span><input type="checkbox" id="set-hints"></label>
